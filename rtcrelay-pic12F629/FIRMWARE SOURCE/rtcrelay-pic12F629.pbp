@@ -1,0 +1,49 @@
+DEFINE OSC 4 
+Define	NO_CLRWDT 1
+
+SDA     var GPIO.0
+SCL     var GPIO.1
+IZLAZ   var GPIO.2
+
+output izlaz
+
+RTC     CON %11010000 
+SecReg  CON $00 
+
+Sec    VAR BYTE 
+Mins   VAR BYTE 
+Hr     VAR BYTE 
+Day    VAR BYTE 
+Date   VAR BYTE 
+Mon    VAR BYTE 
+Yr     VAR BYTE 
+Temp   var byte
+izlaz = 0
+CMCON = 7
+
+gosub postavi_nulu
+
+Glavni:
+    I2CRead SDA, SCL, RTC, SecReg, [sec,MINs,hr,day,date,mon,yr]
+   	if hr = 1 and mins = 0 and sec = 0 then gosub ukljucenje
+    pause 10
+goto glavni
+Postavi_nulu:
+    Yr      =$01
+    mon     =$01
+    date    =$01
+    day     =$01
+    hr      =$00
+    sec     =$00
+    mins    =$00
+    I2CWrite SDA, SCL, RTC, SecReg,[sec,mins,hr,day,date,mon,yr]
+    Pause 10
+return
+Ukljucenje:
+    izlaz = 1 
+    pause 5000
+    izlaz = 0
+    gosub postavi_nulu
+return
+end
+

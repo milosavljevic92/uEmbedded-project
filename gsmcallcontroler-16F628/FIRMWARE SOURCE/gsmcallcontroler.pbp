@@ -1,0 +1,112 @@
+low OPTION_REG.7 
+            
+DEFINE I2C_SDA PORTB.4 
+DEFINE I2C_SCL PORTB.5
+            
+symbol SDA = PORTB.4
+symbol SCL = PORTB.5
+symbol Jumper = PORTB.3
+symbol Rele = PORTA.0
+symbol Led1 =PORTA.1
+symbol Led2 =PORTA.2
+symbol Rx = PORTB.7
+symbol Tx = PORTB.6
+            
+output led1
+output led2
+output rele
+output tx
+            
+input rx
+input jumper
+           
+HIGH led1
+low led2
+low rele
+            
+Adr var word
+J var byte
+I VAR BYTE
+d var byte[12] 
+Mem var byte[12] 
+i=0
+'*********************************************************************************************
+ Init:
+        toggle led1
+        serout tx,0,["AT",13]
+        serin2 rx,396,1000,init,[WAIT("OK")] 
+        pause 1000
+        serout TX,0,["at&f",13]
+        pause 500
+        toggle led1
+        serout TX,0,["at+ipr=2400",13]
+        pause 500
+        toggle led1
+        serout TX,0,["at+clip=1",13]
+        pause 500
+        serout TX,0,["at e0 &w0",13]
+        pause 500
+        led1 = 1
+        if jumper = 1 then 
+            low led2
+            gosub main
+        else
+            gosub ProgramMod
+        endif
+ Main:
+        serin2 rx,396,100,Main,[WAIT("+381"),STR d\10]
+        i = 0  
+        pause 500
+        serout tx,0,["AT+CHUP",13]
+ Provera:
+        led1 = i.4 
+        adr = i * 10 + 1 
+        i = i + 1
+        i2cread sda,scl,$A0,adr,[str mem\10]  
+        if i = 255 then goto Main
+        for j = 1 to 10   
+            if mem[j]<>d[j] then goto provera
+        next j
+        IF rele = 1 THEN 
+            LOW RELE
+        ELSE
+            HIGH rele
+        endif
+        pause 100
+
+ goto Main
+'*********************************************************************************************
+ProgramMod:
+     adr=0
+     low led1
+     i2cread sda,scl,$A0,adr,[i]
+     if i = 255 then i = 0
+     upis:
+        high led2  
+        serin2 rx,396,100,upis,[WAIT("+381"),STR d\10] 
+        low led2 
+        adr = i * 9 + 1
+        i2cwrite sda,scl,$A0,adr,[str d\10]
+        pause 500
+        serout tx,0,["AT+CHUP",13]
+        i = i + 1
+        adr = 0
+        i2cwrite sda,scl,$A0,adr,[i]
+        pause 500
+     goto upis
+'*********************************************************************************************
+PosaljiPoruku: 
+    serout TX,0,["AT+CMGF=1",13] 
+    PAUSE 3000
+    serout TX,0,["AT+CMGS=+381644151457",13]
+    pause 3000
+    serout TX,0,["Stanje releja je: "]
+    if rele = 1 then
+        serout TX,0,[13,"UPALJEN"]
+    else
+        serout TX,0,[13,"UGASEN"] 
+    ENDIF
+    serout TX,0,[26]
+    pause 3000
+return
+end 
