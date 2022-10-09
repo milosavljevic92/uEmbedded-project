@@ -1,0 +1,130 @@
+INCLUDE "DT_INTS-14.bas"    
+INCLUDE "ReEnterPBP.bas"  
+define OSC 4
+
+ASM
+INT_LIST  macro    
+        INT_Handler   TMR1_INT,  _ProveriSlanjeTemp,   PBP,  yes
+    endm
+    INT_CREATE               
+ENDASM
+
+T1CON = $31           
+@ INT_ENABLE  TMR1_INT     
+   
+DEFINE LCD_BITS 4
+Define LCD_DREG  PORTC
+Define LCD_DBIT  0
+Define LCD_RSREG PORTC
+Define LCD_RSBIT 5
+Define LCD_EREG  PORTC
+Define LCD_EBIT  4
+DEFINE LCD_LINES 2
+DEFINE LCD_COMMANDUS 2000
+DEFINE LCD_DATAUS 40
+
+symbol Gore     = PORTA.3
+symbol Dole     = PORTA.4
+Symbol OK       = PORTA.5
+symbol RTC_SDA  = PORTB.2
+symbol RTC_SCL  = PORTB.3
+SYMBOL EE_SDA   = PORTB.0
+SYMBOL EE_SCL   = PORTB.1
+SYMBOL TX       = PORTC.6
+SYMBOL RX       = PORTC.7
+symbol DQ       = PORTB.4
+
+OUTPUT TX
+input  dq
+INPUT  RX
+INPUT  OK
+INPUT  GORE
+INPUT  DOLE
+
+Poslati         var byte[4]
+wsave           VAR BYTE $70 SYSTEM 
+Temperature 	Var	Word		
+TempC			Var Word
+Float			Var Word
+TargetTemp		Var	Word		
+Hyst			Var	Word		
+V				Var	Word
+Seconds         var byte
+Minutes         var byte
+Hours           var byte
+DecSat          var byte 
+DecMinut        var byte 
+DecSec          var byte
+prijem          var byte
+SIGN            VAR BYTE 
+Twist			Var byte
+ADCON1          =   $0F
+RTC             con %10100010
+pause 200
+Lcdout $fe, 1
+gosub PodesiVreme
+
+Main:
+    gosub IzmeriTemperaturu
+    Lcdout $fe, 2,"Temp",sign, dec2 (Temperature / 100) ,dec2 temperature, 223,"C             "
+    Lcdout $fe, $c0, "Time: ",dec2 decsat,":",dec2 decminut,":",dec2 decsec ,"               "
+    PAUSE 50
+GOTO MAIN
+
+UzmiVreme:
+    i2cread rtc_sda,rtc_scl,rtc,$02,[seconds,minutes,hours]
+    minutes.7=0:hours.7=0:hours.6=0
+    DecMinut = ((minutes  & %11110000)>>4)  * 10 + (minutes & %00001111)
+    decsat = ((Hours & %11110000)>>4)  * 10 + (hours & %00001111)
+    decsec = ((Seconds  & %11110000)>>4)  * 10 + (seconds  & %00001111)
+    pause 10
+return
+
+PodesiVreme: 
+    I2cwrite rtc_sda,rtc_scl,rtc,$02,[$00,$00,$00,$01,$02,$01,$01]
+    pause 10
+return
+
+ProveriSlanjeTemp:
+    serin2  rx,396,NemaPodataka,[wait ("TC")]
+    poslati[1] = (Temperature / 100)
+    poslati[2] = Temperature   
+    serout2 tx ,396,[sign,dec2 poslati[1],",",dec2 poslati[2],10]
+NemaPodataka:
+@ INT_RETURN
+
+IzmeriTemperaturu: 
+    OWOut DQ, 1, [$CC, $44 ]       	
+    WHILE NOT DQ
+    WEND
+    OWOUT DQ, 1, [$CC, $BE ]                       													
+    OWIN  DQ, 2, [Temperature.Lowbyte, Temperature.Highbyte]
+    IF Temperature.15 THEN
+        Temperature = ~Temperature + 1
+        Twist = 1
+    ENDIF
+    TempC = (Temperature & $7FF)>>4   				
+    Float = ((Temperature.Lowbyte & $0F)*25)>>2    
+    Temperature = TempC*100 + Float						
+    IF Twist = 1 THEN
+        V= 10000 - Temperature                
+        Twist = 0 
+    else
+        V= 10000 + Temperature
+    EndIf
+    If v = 10000 then                      
+        Sign = " " 				
+    Else 
+        If v < 10000 then              	
+            Sign="-"					
+        Else
+            Sign="+"				
+        EndIf
+    EndIf
+    If V >= 10000 then                           
+        Temperature=V-10000                   
+    Else                                   
+        Temperature=10000-V                 
+    EndIf
+return
+END

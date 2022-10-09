@@ -1,0 +1,337 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+TwitterTermometer
+</name>
+</assembly>
+<members>
+<member name="T:TwitterTermometer.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:TwitterTermometer.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:TwitterTermometer.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:TwitterTermometer.MessageDisplay">
+ <summary>
+ Sends all notified messages to the status label.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:TwitterTermometer.NotifierHandler">
+ <summary>
+ Raises all information accordingly to the status label.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:TwitterTermometer.NotifierHandler.Notifies">
+ <summary>
+ Represents the method that will handle the <see cref="E:TwitterTermometer.NotifierHandler.Notifies">PostData</see> event of <see cref="E:TwitterTermometer.NotifierHandler.Notifies" />.
+ </summary>
+ <remarks >
+ Notifies the current session state.
+ </remarks>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.OnNotifier(TwitterTermometer.NotifierEventArghs)">
+ <summary>
+ Raises the Notifies event.
+ </summary>
+ <param name="e">The Event Arguments.</param>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowLoginSuccess">
+ <summary>
+ Displays an message that the login was successful.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowSessionActive">
+ <summary>
+ Displays an message that the session is already active.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowTweetSuccess">
+ <summary>
+ Displays an message that the tweet was posted.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowTweetAlreadyPosted">
+ <summary>
+ Displays an message that the tweet has already been posted.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowLoggedOut">
+ <summary>
+ Displays an message that the session has ended.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowFormAuthKeyFail">
+ <summary>
+ Displays an error message that indicates the form authenticity key could not be obtained.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowUrlInvalid(System.String)">
+ <summary>
+ Displays an error message that indicates the form url is invalid.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowHrefInvalid(System.String)">
+ <summary>
+ Displays an error message that indicates the form Href is invalid.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowRequestFailed(System.String)">
+ <summary>
+ Displays an error message that indicates the request Failed.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowRequestFailedReturnedStatus(System.String,System.String)">
+ <summary>
+ Displays an error message that indicates the request failed.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowResponseFailed(System.String)">
+ <summary>
+ Displays an error message that indicates the response failed.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowResponseIsBad(System.String,System.Int32,System.String)">
+ <summary>
+ Displays an error message that indicates the response status code is bad.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.NotifierHandler.ShowLoginError">
+ <summary>
+ Displays an error message that indicates the login has failed.
+ </summary>
+</member>
+<member name="T:TwitterTermometer.PostData">
+ <summary>
+ Connects to the request server performing the requested tasks
+ and appropriate validation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:TwitterTermometer.PostData.UNKNOWN_PAGE_RETURNED">
+ <summary>
+ Returns the servers error request page information HTML index.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:TwitterTermometer.PostData.m_userAgent">
+ <summary>
+ The value of the User-agent HTTP header. The default value is Nothing.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.PostData.m_timeoutSeconds">
+ <summary>
+ The number of milliseconds to wait before the request times out. The default value is 100,000 milliseconds (100 seconds).
+ </summary>
+</member>
+<member name="F:TwitterTermometer.PostData.m_forumUrl">
+ <summary>
+ The URL of the web application. Passed to the constructor during initialization.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.PostData.m_formMethod">
+ <summary>
+ The request method to use to contact the Internet resource. The default value is GET.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.PostData.m_formAuthenticityToken">
+ <summary>
+ The form's authenticity token.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:TwitterTermometer.PostData.m_cookies">
+ <summary>
+ A CookieContainer that contains the cookies associated with this request.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.PostData.m_notifierHandler">
+ <summary>
+ Details about the last notified message experienced.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.PostData.#ctor(System.String,TwitterTermometer.NotifierHandler)">
+ <summary>
+ Creates a new instance of the <see cref="T:TwitterTermometer.PostData" /> Class.
+ </summary>
+ <param name="ForumUrl">The web applications url.</param>
+ <param name="Exceptionhandler">Exception handling object.</param>
+</member>
+<member name="E:TwitterTermometer.PostData.AuthenticityToken">
+ <summary>
+ Represents the method that will handle the <see cref="E:TwitterTermometer.PostData.AuthenticityToken">PostData</see> event of <see cref="E:TwitterTermometer.PostData.AuthenticityToken" />.
+ </summary>
+ <remarks >
+ Displays all relative post data patterns including authenticity token.
+ </remarks>
+</member>
+<member name="E:TwitterTermometer.PostData.ReturnedPageSource">
+ <summary>
+ Represents the method that will handle the <see cref="E:TwitterTermometer.PostData.ReturnedPageSource">PostData</see> event of <see cref="E:TwitterTermometer.PostData.ReturnedPageSource" />.
+ </summary>
+ <remarks >
+ The most recent HTML source retrieved from the server.
+ </remarks>
+</member>
+<member name="E:TwitterTermometer.PostData.LoggedOut">
+ <summary>
+ Represents the method that will handle the <see cref="E:TwitterTermometer.PostData.LoggedOut">PostData</see> event of <see cref="E:TwitterTermometer.PostData.LoggedOut" />.
+ </summary>
+ <remarks>
+ Notifies the session has been cleared.
+ </remarks>
+</member>
+<member name="M:TwitterTermometer.PostData.AttemptLogin(System.String,System.String,System.Boolean)">
+ <summary>
+ Attempts to login to the server with the supplied username and password.
+ </summary>
+ <param name="UserName">PlainText username</param>
+ <param name="Password">PlainText Password</param>
+ <param name="RememberMe">If true, the user will be remembered by the server.</param>
+</member>
+<member name="M:TwitterTermometer.PostData.AttemptLogout">
+ <summary>
+ Forces a logout of the current session. Regardless of the return value, the session will no longer
+ be useable after this call. The use must be logged in again.
+ </summary>
+</member>
+<member name="M:TwitterTermometer.PostData.TryGetServerAuthenticityToken(System.String)">
+ <summary>
+ This gets values from the token page source, such as form authenticity token.
+ </summary>
+ <param name="tokenHref"></param>
+ <returns>True if successful, otherwise false.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:TwitterTermometer.PostData.GetAbsoluteUri(System.String)">
+ <summary>
+ Get's an absolute URI based on the ForumURL and a path relative to it.
+ </summary>
+ <param name="href">The relative path.</param>
+ <returns>An absolute URI.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:TwitterTermometer.PostData.IsLoggedIn">
+ <summary>
+ Returns True if this PostData object is associated with an authenticated session,
+ otherwise False.
+ </summary>
+ <returns>True is cookies not expired.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:TwitterTermometer.PostData.UnknownPageReturned(System.String)">
+ <summary>
+ Returns a string value if a match is found else returns an empty string.
+ </summary>
+ <param name="source"></param>
+ <returns>A string value.</returns>
+ <remarks></remarks>
+</member>
+<member name="F:TwitterTermometer.MainForm._m_postData">
+ <summary>
+ An object of PostData.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.MainForm._m_notifierHandler">
+ <summary>
+ Details about the last notified message experienced.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.MainForm.m_messageDisplay">
+ <summary>
+ Renders all new messages to the status window.
+ </summary>
+</member>
+<member name="F:TwitterTermometer.MainForm.m_returnedPageSource">
+ <summary>
+ Holds an instance of the returned pages source.
+ </summary>
+ <remarks>
+ Has the possibility to be outdated due to the Three seconds delay.
+ </remarks>
+</member>
+<member name="M:TwitterTermometer.MainForm.Display(System.String)">
+ <summary>
+ Passes a string value to the implementation of IMessageDisplay.
+ </summary>
+ <param name="Message">A string value.</param>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1.TblTemperaturaDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1.TblTemperaturaRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1.TblTemperaturaRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1TableAdapters.TblTemperaturaTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.UpdateUpdatedRows(TwitterTermometer.TT_baseDataSet1,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.UpdateInsertedRows(TwitterTermometer.TT_baseDataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.UpdateDeletedRows(TwitterTermometer.TT_baseDataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.UpdateAll(TwitterTermometer.TT_baseDataSet1)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:TwitterTermometer.TT_baseDataSet1TableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+</members>
+</doc>
