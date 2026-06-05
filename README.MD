@@ -64,7 +64,7 @@ Each project folder typically contains:
 
 ```
 project-name/
-├── firmware/         # PicBasic Pro source (.bas)
+├── firmware/         # PicBasic Pro source (.pbp)
 ├── pcb/              # Sprint Layout 5.0 file (.lay)
 ├── schematic/        # Schematic (image or file)
 └── README.md         # Project-specific notes
@@ -75,7 +75,7 @@ project-name/
 ## ⚡ Getting Started
 
 ### Firmware
-1. Open `.bas` source files in **PicBasic Pro** (v1.6–3.0)
+1. Open `.pbp` source files in **PicBasic Pro** (v1.6–3.0)
 2. Compile and flash to the target PIC using a compatible programmer (e.g. PICkit, ICD)
 
 ### PCB
