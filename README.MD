@@ -86,9 +86,5 @@ project-name/
 
 ## 📜 License
 
-These projects are shared for educational and hobbyist purposes.  
-Feel free to use, modify, and build upon them.
-
----
-
-*Developed by [Tecomatic](https://tecomatic.rs) — Novi Sad, Serbia*
+This repository is licensed under the **MIT License**.  
+See [LICENSE](LICENSE) for details.
